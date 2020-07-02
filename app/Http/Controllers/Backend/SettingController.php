@@ -26,10 +26,10 @@ class SettingController extends Controller
 		}
 		return redirect()->route('admin.setting.index');
 	}
-//todo ssl
+
 	public function setwebhook(Request $request)
 	{
-		$result = $this->sendTelegramData('setwebhook',[
+		$result = $this->sendTelegramData('setWebhook', [
 			'query' => ['url' => $request->url . '/' . \Telegram::getAccessToken()]
 		]);
 		return redirect()->route('admin.setting.index')->with('status', $result);
@@ -43,8 +43,23 @@ class SettingController extends Controller
 
 	public function sendTelegramData($route = '', $params = [], $method = 'POST')
 	{
-		$client = new \GuzzleHttp\Client(['base_url' => 'https://api.telegram.org/bot' . \Telegram::getAccessToken() . '/'] );
+		$client = new \GuzzleHttp\Client(['base_uri' => 'https://api.telegram.org/bot' . \Telegram::getAccessToken() . '/'] );
+		//dd($method, $route, $params);
 		$result = $client->request($method, $route, $params);
 		return (string) $result->getBody();
 	}
+//	private function AccessToken($route = '', $params = [])
+//	{
+//		$client = new Client();
+//		$URI = 'https://api.telegram.org/bot' . \Telegram::getAccessToken() . '/';
+//		$params['headers'] = ['Content-Type' => 'application/x-www-form-urlencoded'];
+//		try{
+//			$response = $client->post($URI, $params);
+//			var_dump($response);
+//		}
+//		catch (RequestException $e){
+//			echo 'Error: ' . $e->getMessage();
+//		}
+//
+//	}
 }

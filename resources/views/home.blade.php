@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    <template-component></template-component>
                 </div>
             </div>
         </div>
